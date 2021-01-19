@@ -104,7 +104,7 @@ function createNotebookGenerator(
       let cell: Cell = panel.content.widgets[i];
       let model = cell.model;
 
-      let collapsed = model.metadata.get('toc-hr-collapsed') as boolean;
+      let collapsed = model.ymeta.get('toc-hr-collapsed') as boolean;
       collapsed = collapsed || false;
 
       if (model.type === 'code') {
@@ -118,7 +118,7 @@ function createNotebookGenerator(
           let count = (cell as CodeCell).model.executionCount as number | null;
           let executionCount = count !== null ? '[' + count + ']: ' : '[ ]: ';
           let heading = getCodeCellHeading(
-            (model as CodeCellModel).value.text,
+            (model as CodeCellModel).getValue(),
             onClick,
             executionCount,
             getLastHeadingLevel(headings),
@@ -206,7 +206,7 @@ function createNotebookGenerator(
             };
           };
           heading = getMarkdownHeading(
-            model!.value.text,
+            model!.getValue(),
             onClick,
             dict,
             lastLevel,
