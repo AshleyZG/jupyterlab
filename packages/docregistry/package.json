@@ -46,7 +46,6 @@
     "@jupyterlab/codeeditor": "^3.0.2",
     "@jupyterlab/codemirror": "^3.0.2",
     "@jupyterlab/coreutils": "^5.0.1",
-    "@jupyterlab/observables": "^4.0.1",
     "@jupyterlab/rendermime": "^3.0.3",
     "@jupyterlab/rendermime-interfaces": "^3.0.2",
     "@jupyterlab/services": "^6.0.2",
