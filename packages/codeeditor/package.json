@@ -44,7 +44,6 @@
   "dependencies": {
     "@jupyterlab/coreutils": "^5.0.1",
     "@jupyterlab/nbformat": "^3.0.1",
-    "@jupyterlab/observables": "^4.0.1",
     "@jupyterlab/translation": "^3.0.2",
     "@jupyterlab/ui-components": "^3.0.2",
     "@lumino/coreutils": "^1.5.3",
