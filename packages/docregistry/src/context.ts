@@ -5,6 +5,7 @@ import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 import * as decoding from 'lib0/decoding';
 import * as encoding from 'lib0/encoding';
+import { Awareness } from 'y-protocols/awareness.js'
 
 import {
   Contents,
@@ -176,6 +177,24 @@ class WebsocketProviderWithLocks extends WebsocketProvider {
   } | null = null;
 }
 
+interface IYjsProvider {
+  awareness: Awareness | null;
+  destroy: () => void;
+  acquireLock: () => Promise<number>;
+  releaseLock: (lock: number) => void;
+  putInitializedState: () => void;
+  requestInitialContent: () => Promise<boolean>
+}
+
+const noProvider: IYjsProvider = {
+  awareness: null,
+  destroy: () => void 0,
+  acquireLock: () => Promise.resolve(0),
+  releaseLock: lock => Promise.resolve(),
+  putInitializedState: () => void 0,
+  requestInitialContent: () => Promise.resolve(true)
+}
+
 /**
  * An implementation of a document context.
  *
@@ -203,9 +222,8 @@ export class Context<
     this.ycontext = ydoc.getMap('context');
     // @todo remove websocket provider - this should be handled by a separate plugin
     const server = ServerConnection.makeSettings();
-    const url = URLExt.join(server.wsUrl, 'api/yjs');
-    console.debug('URL:', url);
-    this.provider = new WebsocketProviderWithLocks(url, ydoc.guid, ydoc);
+    this.provider = noProvider || new WebsocketProviderWithLocks(URLExt.join(server.wsUrl, 'api/yjs'), ydoc.guid, ydoc);
+    console.log('provider', this.provider)
     // @todo remove debugging information:
     // @ts-ignore
     window.ydocs = window.ydocs || [];
@@ -958,7 +976,7 @@ or load the version on disk (revert)?`,
   }
 
   protected translator: ITranslator;
-  protected provider: WebsocketProviderWithLocks;
+  protected provider: IYjsProvider;
   protected ydoc: Y.Doc;
   protected ycontext: Y.Map<any>;
   private _trans: TranslationBundle;
