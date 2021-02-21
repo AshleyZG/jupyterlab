@@ -9587,11 +9587,6 @@ isomorphic-fetch@^2.1.1:
     node-fetch "^1.0.1"
     whatwg-fetch ">=0.10.0"
 
-isomorphic.js@^0.1.3:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/isomorphic.js/-/isomorphic.js-0.1.5.tgz#f210e58ba4c96978a991c443cf67283366e9b70f"
-  integrity sha512-MkX5lLQApx/8IAIU31PKvpAZosnu2Jqcj1rM8TzxyA4CR96tv3SgMKQNTCxL58G7696Q57zd7ubHV/hTg+5fNA==
-
 isomorphic.js@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/isomorphic.js/-/isomorphic.js-0.2.0.tgz#46b4be708a973804263959d80d556b87959b211f"
@@ -10513,17 +10508,10 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lib0@^0.2.31, lib0@^0.2.35:
-  version "0.2.35"
-  resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.35.tgz#1d62adb3feefce70c84f3eb664c5e50286de41ca"
-  integrity sha512-drVD3EscB3TIxiFzceuZg7oF5Z6I8a0KX+7FowNcAXOEsTej/hlHB+ElJ8Pa/Ge73Gy3fklSJtPxpNd2PajdWg==
-  dependencies:
-    isomorphic.js "^0.1.3"
-
-lib0@~0.2.36:
-  version "0.2.36"
-  resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.36.tgz#ffe7999bccfbbd8d8a198f7f3f46ef3c10e2844a"
-  integrity sha512-XELDnWFDVDdnQA16R/24wtH1I1v5C/yyMQ4xZBWOWHo+DHlXZ8C4I5neR+3u/wKCkzXw2dDxfkTd7Cheqm+fgg==
+lib0@^0.2.31, lib0@^0.2.35, lib0@^0.2.39:
+  version "0.2.39"
+  resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.39.tgz#a20f06e32baacd30748ac3f5d4fca9c02e563631"
+  integrity sha512-sfJJYXbuSdBf1yCdDlll+RYQmwbG9SCfSFO7vipGBXOfGcaWY2FrIrpBFS+DyOuzpBcPnVs3N5NJr6vhnq3r1Q==
   dependencies:
     isomorphic.js "^0.2.0"
 
