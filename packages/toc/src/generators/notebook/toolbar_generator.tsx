@@ -156,7 +156,7 @@ function toolbar(options: OptionsManager, tracker: INotebookTracker) {
         const model = notebook.model!;
         const tags = new Set<string>();
         this.tags = [];
-        for (let i = 0; i < model.cellInstances.length; i++) {
+        for (let i = 0; i < model.ycells.length; i++) {
           const cell = model.getCell(i)!;
           const list = cell.ymeta.get('tags') as JSONValue;
           if (Array.isArray(list)) {

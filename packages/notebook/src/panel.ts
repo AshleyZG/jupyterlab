@@ -25,6 +25,7 @@ import {
   ITranslator,
   TranslationBundle
 } from '@jupyterlab/translation';
+import { each } from '@lumino/algorithm';
 
 /**
  * The class name added to notebook panels.
@@ -86,7 +87,7 @@ export class NotebookPanel extends DocumentWidget<Notebook, INotebookModel> {
   _onSave(sender: DocumentRegistry.Context, state: DocumentRegistry.SaveState) {
     if (state === 'started' && this.model) {
       // Find markdown cells
-      this.model.cellInstances.forEach(cell => {
+      each(this.model.cells, cell => {
         if (isMarkdownCellModel(cell)) {
           const cellValue = cell.getValue();
           for (const key of cell.attachments.keys) {

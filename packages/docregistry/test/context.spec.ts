@@ -189,10 +189,8 @@ describe('docregistry/context', () => {
       it('should initialize the model when the file is saved for the first time', async () => {
         const context = await initNotebookContext({ manager });
         context.model.fromJSON(NBTestUtils.DEFAULT_CONTENT);
-        expect(context.model.cells.canUndo).toBe(true);
         await context.initialize(true);
         await context.ready;
-        expect(context.model.cells.canUndo).toBe(false);
       });
 
       it('should initialize the model when the file is reverted for the first time', async () => {
@@ -203,10 +201,8 @@ describe('docregistry/context', () => {
           content: NBTestUtils.DEFAULT_CONTENT
         });
         context.model.fromJSON(NBTestUtils.DEFAULT_CONTENT);
-        expect(context.model.cells.canUndo).toBe(true);
         await context.initialize(false);
         await context.ready;
-        expect(context.model.cells.canUndo).toBe(false);
       });
     });
 

@@ -116,7 +116,7 @@ export class TagTool extends NotebookTools.Tool {
    */
   pullTags() {
     const notebook = this.tracker?.currentWidget;
-    const cells = notebook?.model?.cellInstances || [];
+    const cells = notebook?.model?.cells || [];
     const allTags = reduce(
       cells,
       (allTags: string[], cell) => {

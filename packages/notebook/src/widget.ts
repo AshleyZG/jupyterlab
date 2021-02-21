@@ -354,7 +354,7 @@ export class StaticNotebook extends Widget {
       return;
     }
     this._updateMimetype();
-    if (!newValue.cellInstances.length && newValue.isInitialized) {
+    if (!newValue.ycells.length && newValue.isInitialized) {
       const yawareness = this.model!.yawareness;
       const yUndoManager = this.model!.yUndoManager;
       newValue.insertCell(
@@ -365,7 +365,7 @@ export class StaticNotebook extends Widget {
         })
       );
     }
-    each(newValue.cellInstances, (cell: ICellModel, i: number) => {
+    each(newValue.cells, (cell: ICellModel, i: number) => {
       this._insertCell(i, cell);
     });
     newValue.cellsChanged.connect(this._onCellsChanged, this);

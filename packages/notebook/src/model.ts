@@ -26,6 +26,8 @@ import {
   ITranslator,
   TranslationBundle
 } from '@jupyterlab/translation';
+import { ObservableList } from '@jupyterlab/observables';
+import { toArray } from '@lumino/algorithm';
 
 /**
  * The definition of a model object for a notebook widget.
@@ -51,8 +53,8 @@ export interface INotebookModel extends DocumentRegistry.IModel {
    */
   readonly deletedCells: string[];
   readonly cellsChanged: Signal<INotebookModel, Y.YArrayEvent<Y.Map<any>>>;
-  readonly cellInstances: Array<ICellModel>;
   readonly ycells: Y.Array<Y.Map<any>>;
+  readonly cells: ObservableList<ICellModel>;
   insertCell(index: number, cell: ICellModel): void;
   insertCells(index: number, cells: ICellModel[]): void;
   setCell(index: number, cell: ICellModel): void;
@@ -97,13 +99,16 @@ export class NotebookModel extends DocumentModel implements INotebookModel {
     this.ycells.observeDeep(this.triggerContentChange);
     this._onCellsChanged = this._onCellsChanged.bind(this);
     this.ycells.observe(this._onCellsChanged);
+    // This models the data of the ycells objects as a ModelDB instance
+    // and is mainly here for compatibility reasons.
+    this.cells = new ObservableList();
 
-    this.cellInstances = this.ycells.toArray().map(type => {
+    this.cells.insertAll(0, this.ycells.toArray().map(type => {
       if (!this.ytypeCellMapping.has(type)) {
         this.ytypeCellMapping.set(type, this._createCellFromType(type));
       }
       return this.ytypeCellMapping.get(type) as ICellModel;
-    });
+    }));
   }
 
   readonly yUndoManager: Y.UndoManager;
@@ -111,10 +116,8 @@ export class NotebookModel extends DocumentModel implements INotebookModel {
   readonly ytypeCellMapping: Map<Y.Map<any>, ICellModel> = new Map();
 
   readonly ycells: Y.Array<any>;
-  /**
-   * @todo listen to changes of ycells and create ICell instances
-   */
-  cellInstances: Array<ICellModel>;
+
+  readonly cells: ObservableList<ICellModel>;
 
   /**
    * The cell model factory for the notebook.
@@ -194,7 +197,7 @@ export class NotebookModel extends DocumentModel implements INotebookModel {
    * Serialize the model to JSON.
    */
   toJSON(): nbformat.INotebookContent {
-    const cells = this.cellInstances.map(cell => cell.toJSON());
+    const cells = toArray(this.cells.iter()).map(cell => cell.toJSON())
     const metadata = Object.create(null) as nbformat.INotebookMetadata;
     for (const [key, value] of this.ymeta.entries()) {
       metadata[key] = JSON.parse(JSON.stringify(value));
@@ -321,7 +324,7 @@ close the notebook without saving it.`,
   }
 
   getCell(index: number): ICellModel {
-    return this.cellInstances[index];
+    return this.cells.get(index);
   }
 
   deleteCell(index: number, length: number = 1): void {
@@ -423,10 +426,17 @@ close the notebook without saving it.`,
         this.ytypeCellMapping.delete(type);
       }
     });
-    this.cellInstances = this.ycells
-      .toArray()
-      .map(type => this.ytypeCellMapping.get(type))
-      .filter(x => x != null) as Array<ICellModel>;
+    let index = 0
+    event.changes.delta.forEach((d: any) => {
+      if (d.insert != null) {
+        this.cells.insertAll(index, d.insert.map((ycell: Y.Map<any>) => this.ytypeCellMapping.get(ycell)));
+        index += d.insert.length;
+      } if (d.delete != null) {
+        this.cells.removeRange(index, index + d.delete);
+      } else if (d.retain != null) {
+        index += d.retain
+      }
+    });
     this.cellsChanged.emit(event);
   };
 

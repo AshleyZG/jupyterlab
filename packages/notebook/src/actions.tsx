@@ -23,7 +23,7 @@ import * as nbformat from '@jupyterlab/nbformat';
 
 import { KernelMessage } from '@jupyterlab/services';
 
-import { ArrayExt } from '@lumino/algorithm';
+import { ArrayExt, each, every, toArray } from '@lumino/algorithm';
 
 import { JSONObject, JSONExt } from '@lumino/coreutils';
 
@@ -377,7 +377,7 @@ export namespace NotebookActions {
     const widgets = notebook.widgets;
 
     model.ymodel.transact(() => {
-      for (let i = 1; i < model.cellInstances.length; i++) {
+      for (let i = 1; i < model.ycells.length; i++) {
         if (notebook.isSelectedOrActive(widgets[i])) {
           if (!notebook.isSelectedOrActive(widgets[i - 1])) {
             model.moveCell(i, i - 1);
@@ -480,7 +480,7 @@ export namespace NotebookActions {
         notebook.notebookConfig.defaultCell,
         {}
       );
-      model.insertCell(model.cellInstances.length, cell);
+      model.insertCell(model.ycells.length, cell);
       notebook.activeCellIndex++;
       notebook.mode = 'edit';
     } else {
@@ -1045,7 +1045,7 @@ export namespace NotebookActions {
       return;
     }
     const state = Private.getState(notebook);
-    notebook.model.cellInstances.forEach((cell: ICodeCellModel, index) => {
+    each(notebook.model.cells, (cell: ICodeCellModel, index) => {
       const child = notebook.widgets[index];
       if (notebook.isSelectedOrActive(child) && cell.type === 'code') {
         cell.clearExecution();
@@ -1068,7 +1068,7 @@ export namespace NotebookActions {
       return;
     }
     const state = Private.getState(notebook);
-    notebook.model.cellInstances.forEach((cell: ICodeCellModel, index) => {
+    each(notebook.model.cells, (cell: ICodeCellModel, index) => {
       const child = notebook.widgets[index];
       if (cell.type === 'code') {
         cell.clearExecution();
@@ -1367,8 +1367,8 @@ export namespace NotebookActions {
     }
     // Do nothing if already trusted.
 
-    const cells = notebook.model.cellInstances;
-    const trusted = cells.every(cell => cell.trusted);
+    const cells = notebook.model.cells;
+    const trusted = every(cells, cell => cell.trusted)
     // FIXME
     const trustMessage = (
       <p>
@@ -1403,7 +1403,7 @@ export namespace NotebookActions {
       ] // FIXME?
     }).then(result => {
       if (result.button.accept) {
-        cells.forEach(cell => {
+        each(cells, cell => {
           cell.trusted = true;
         });
       }
@@ -1675,11 +1675,11 @@ namespace Private {
     // Create a new code cell and add as the next cell.
     const newCell = notebook.model!.contentFactory.createCodeCell({});
     const model = notebook.model!;
-    const index = ArrayExt.firstIndexOf(model.cellInstances, cell.model);
+    const index = ArrayExt.firstIndexOf(toArray(model.cells.iter()), cell.model);
 
     newCell.setValue(text);
     if (index === -1) {
-      model.insertCell(model.cellInstances.length, newCell);
+      model.insertCell(model.ycells.length, newCell);
     } else {
       model.insertCell(index + 1, newCell);
     }
@@ -1816,7 +1816,7 @@ namespace Private {
         // Add a new cell if the notebook is empty. This is done
         // within the compound operation to make the deletion of
         // a notebook's last cell undoable.
-        if (!model.cellInstances.length) {
+        if (!model.ycells.length) {
           model.insertCell(
             0,
             model.contentFactory.createCell(

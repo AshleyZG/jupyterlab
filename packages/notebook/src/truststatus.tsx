@@ -9,6 +9,7 @@ import { Cell } from '@jupyterlab/cells';
 import { notTrustedIcon, trustedIcon } from '@jupyterlab/ui-components';
 
 import { nullTranslator, ITranslator } from '@jupyterlab/translation';
+import { reduce } from '@lumino/algorithm';
 
 /**
  * Determine the notebook trust status message.
@@ -246,9 +247,8 @@ export namespace NotebookTrustStatus {
       if (model === null) {
         return { total: 0, trusted: 0 };
       }
-      const cells = model.cellInstances;
-
-      const trusted = cells.reduce((accum, current) => {
+      const cells = model.cells;
+      const trusted = reduce(cells, (accum, current) => {
         if (current.trusted) {
           return accum + 1;
         } else {
