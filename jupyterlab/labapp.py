@@ -674,8 +674,8 @@ class LabApp(NBClassicConfigShimMixin, LabServerApp):
         handlers.append(build_handler)
 
         #YJS_Echo WS Handler
-        yjs_echo_handler = (r"/api/yjs/(.*)", YJSEchoWS)
-        handlers.append(yjs_echo_handler)
+        # yjs_echo_handler = (r"/api/yjs/(.*)", YJSEchoWS)
+        # handlers.append(yjs_echo_handler)
 
         errored = False
 
