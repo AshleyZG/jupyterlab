@@ -5,7 +5,7 @@ import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
 import * as decoding from 'lib0/decoding';
 import * as encoding from 'lib0/encoding';
-import { Awareness } from 'y-protocols/awareness.js'
+import { Awareness } from 'y-protocols/awareness.js';
 
 import {
   Contents,
@@ -183,7 +183,7 @@ interface IYjsProvider {
   acquireLock: () => Promise<number>;
   releaseLock: (lock: number) => void;
   putInitializedState: () => void;
-  requestInitialContent: () => Promise<boolean>
+  requestInitialContent: () => Promise<boolean>;
 }
 
 const noProvider: IYjsProvider = {
@@ -192,8 +192,8 @@ const noProvider: IYjsProvider = {
   acquireLock: () => Promise.resolve(0),
   releaseLock: lock => Promise.resolve(),
   putInitializedState: () => void 0,
-  requestInitialContent: () => Promise.resolve(true)
-}
+  requestInitialContent: () => Promise.resolve(false)
+};
 
 /**
  * An implementation of a document context.
@@ -222,8 +222,14 @@ export class Context<
     this.ycontext = ydoc.getMap('context');
     // @todo remove websocket provider - this should be handled by a separate plugin
     const server = ServerConnection.makeSettings();
-    this.provider = noProvider || new WebsocketProviderWithLocks(URLExt.join(server.wsUrl, 'api/yjs'), ydoc.guid, ydoc);
-    console.log('provider', this.provider)
+    this.provider =
+      noProvider ||
+      new WebsocketProviderWithLocks(
+        URLExt.join(server.wsUrl, 'api/yjs'),
+        ydoc.guid,
+        ydoc
+      );
+    console.log('provider', this.provider);
     // @todo remove debugging information:
     // @ts-ignore
     window.ydocs = window.ydocs || [];
@@ -705,15 +711,6 @@ export class Context<
     try {
       let value: Contents.IModel;
       await this._manager.ready;
-      /**
-       * @todo reuse maybeSave
-       */
-      // if (!model.modelDB.isCollaborative) {
-      //  value = await this._maybeSave(options);
-      // } else {
-      //  value = await this._manager.contents.save(this._path, options);
-      // }
-      // @todo revert to checkif if this is collaborative (the provider should be defined on the context)
       value = await this._maybeSave(options);
       if (this.isDisposed) {
         return;

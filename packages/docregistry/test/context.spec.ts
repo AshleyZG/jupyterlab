@@ -352,7 +352,7 @@ describe('docregistry/context', () => {
         const model = await manager.contents.get('', { content: true });
         expect(model.content.find((x: any) => x.name === oldPath)).toBeTruthy();
         expect(model.content.find((x: any) => x.name === newPath)).toBeTruthy();
-      });
+      }, 200000);
 
       it('should bring up a conflict dialog', async () => {
         const newPath = UUID.uuid4() + '.txt';

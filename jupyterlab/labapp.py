@@ -38,7 +38,7 @@ from .handlers.extension_manager_handler import (
 )
 from .handlers.error_handler import ErrorHandler
 
-from .handlers.yjs_echo_ws import YJSEchoWS
+# from .handlers.yjs_echo_ws import YJSEchoWS
 
 
 DEV_NOTE = """You're running JupyterLab from source.
