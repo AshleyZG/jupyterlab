@@ -39,3 +39,5 @@ import '@jupyterlab/translation-extension/style/index.js';
 import '@jupyterlab/ui-components-extension/style/index.js';
 import '@jupyterlab/vdom-extension/style/index.js';
 import '@jupyterlab/vega5-extension/style/index.js';
+import 'ext3/style/index.js';
+import 'jupyterlab-collaboration/style/index.js';

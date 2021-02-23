@@ -115,6 +115,8 @@
     "@lumino/signaling": "^1.4.3",
     "@lumino/virtualdom": "^1.8.0",
     "@lumino/widgets": "^1.16.1",
+    "ext3": "~0.1.0",
+    "jupyterlab-collaboration": "~0.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
@@ -161,7 +163,9 @@
     "@jupyterlab/translation-extension": "~3.1.0-alpha.2",
     "@jupyterlab/ui-components-extension": "~3.1.0-alpha.2",
     "@jupyterlab/vdom-extension": "~3.1.0-alpha.2",
-    "@jupyterlab/vega5-extension": "~3.1.0-alpha.2"
+    "@jupyterlab/vega5-extension": "~3.1.0-alpha.2",
+    "ext3": "~0.1.0",
+    "jupyterlab-collaboration": "~0.1.0"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.1.0-alpha.2",
@@ -210,6 +214,7 @@
       "@jupyterlab/debugger-extension": "",
       "@jupyterlab/docmanager-extension": "",
       "@jupyterlab/documentsearch-extension": "",
+      "ext3": "",
       "@jupyterlab/extensionmanager-extension": "",
       "@jupyterlab/filebrowser-extension": "",
       "@jupyterlab/fileeditor-extension": "",
@@ -218,6 +223,7 @@
       "@jupyterlab/hub-extension": "",
       "@jupyterlab/imageviewer-extension": "",
       "@jupyterlab/inspector-extension": "",
+      "jupyterlab-collaboration": "",
       "@jupyterlab/launcher-extension": "",
       "@jupyterlab/logconsole-extension": "",
       "@jupyterlab/mainmenu-extension": "",
@@ -320,6 +326,7 @@
       "@jupyterlab/docregistry": "../packages/docregistry",
       "@jupyterlab/documentsearch": "../packages/documentsearch",
       "@jupyterlab/documentsearch-extension": "../packages/documentsearch-extension",
+      "ext3": "../packages/ext3",
       "@jupyterlab/extensionmanager": "../packages/extensionmanager",
       "@jupyterlab/extensionmanager-extension": "../packages/extensionmanager-extension",
       "@jupyterlab/filebrowser": "../packages/filebrowser",
@@ -336,6 +343,7 @@
       "@jupyterlab/inspector-extension": "../packages/inspector-extension",
       "@jupyterlab/javascript-extension": "../packages/javascript-extension",
       "@jupyterlab/json-extension": "../packages/json-extension",
+      "jupyterlab-collaboration": "../packages/jupyterlab-collaboration",
       "@jupyterlab/launcher": "../packages/launcher",
       "@jupyterlab/launcher-extension": "../packages/launcher-extension",
       "@jupyterlab/logconsole": "../packages/logconsole",
