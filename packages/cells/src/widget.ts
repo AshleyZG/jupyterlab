@@ -691,7 +691,13 @@ export class CodeCell extends Cell<ICodeCellModel> {
       rendermime,
       contentFactory: contentFactory
     }));
+    const output2 = new OutputArea({
+      model: model.outputs,
+      rendermime,
+      contentFactory: contentFactory
+    });
     output.addClass(CELL_OUTPUT_AREA_CLASS);
+    output2.addClass(CELL_OUTPUT_AREA_CLASS);
     // Set a CSS if there are no outputs, and connect a signal for future
     // changes to the number of outputs. This is for conditional styling
     // if there are no outputs.
@@ -699,8 +705,10 @@ export class CodeCell extends Cell<ICodeCellModel> {
       this.addClass(NO_OUTPUTS_CLASS);
     }
     output.outputLengthChanged.connect(this._outputLengthHandler, this);
+    output2.outputLengthChanged.connect(this._outputLengthHandler, this);
     outputWrapper.addWidget(outputCollapser);
     outputWrapper.addWidget(output);
+    outputWrapper.addWidget(output2);
     (this.layout as PanelLayout).insertWidget(2, outputWrapper);
 
     this._outputPlaceholder = new OutputPlaceholder(() => {
