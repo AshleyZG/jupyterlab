@@ -1,7 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "./tsconfigbase",
-  "exclude": ["**/test/**", "**/testutils/**"],
+  "exclude": [
+    "**/test/**",
+    "**/testutils/**"
+  ],
   "compilerOptions": {
     "paths": {
       "@jupyterlab/*": [
@@ -83,6 +86,9 @@
       "path": "./packages/documentsearch-extension"
     },
     {
+      "path": "./packages/ext3"
+    },
+    {
       "path": "./packages/extensionmanager"
     },
     {
@@ -129,6 +135,9 @@
     },
     {
       "path": "./packages/json-extension"
+    },
+    {
+      "path": "./packages/jupyterlab-collaboration"
     },
     {
       "path": "./packages/launcher"

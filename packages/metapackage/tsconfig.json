@@ -263,6 +263,12 @@
     },
     {
       "path": "../vega5-extension"
+    },
+    {
+      "path": "../ext3"
+    },
+    {
+      "path": "../jupyterlab-collaboration"
     }
   ]
 }
