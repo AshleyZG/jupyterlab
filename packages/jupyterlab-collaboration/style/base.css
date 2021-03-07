@@ -1,0 +1,24 @@
+.wrapper {
+    display: flex;
+    position: relative;
+}
+
+.hide-box {
+    /* height: 100%; */
+    background-color: crimson;
+}
+
+.hide-tab {
+    height: 20%;
+    background-color: rgb(218, 247, 214);
+    color: transparent;
+}
+
+.hide-tab:hover{
+    color: black;
+}
+
+.hidden-cell{
+    display: none;
+    /* visibility: hidden; */
+}
