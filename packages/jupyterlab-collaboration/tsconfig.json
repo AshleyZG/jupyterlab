@@ -40,6 +40,9 @@
       "path": "../notebook"
     },
     {
+      "path": "../outputarea"
+    },
+    {
       "path": "../ui-components"
     }
   ],
