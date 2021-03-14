@@ -1,9 +1,9 @@
 import {
     IDisposable, DisposableDelegate
   } from '@lumino/disposable';
-  import { 
-    PanelLayout, Panel
-  } from '@lumino/widgets';
+  // import { 
+  //   PanelLayout, Panel
+  // } from '@lumino/widgets';
 import {
     ToolbarButton
   } from '@jupyterlab/apputils';
@@ -25,13 +25,13 @@ import {
   ICellModel
 } from '@jupyterlab/cells';
 
-import {
-  OutputArea,
-} from '@jupyterlab/outputarea';
+// import {
+//   OutputArea,
+// } from '@jupyterlab/outputarea';
 
 const WRAPPER_WIDTH: number = 95;
 const SIDE_WIDTH:number = 5;
-const CELL_OUTPUT_AREA_CLASS = 'jp-Cell-outputArea';
+// const CELL_OUTPUT_AREA_CLASS = 'jp-Cell-outputArea';
 
 /**
  * A notebook widget extension that adds a button to the toolbar.
@@ -208,18 +208,9 @@ function addNewBranchOutput(panel: NotebookPanel){
       continue;
     }
     var nOutput = nOutputList[i];
-    for (var ii=0; ii<nOutput-cell.node.getElementsByClassName("jp-OutputArea").length; ii++){
-      const newOutput = new OutputArea({
-        model: cell.model.outputs,
-        rendermime: cell.outputArea.rendermime,
-        contentFactory: cell.contentFactory
-      });
-      newOutput.addClass(CELL_OUTPUT_AREA_CLASS);
-      // this line of code is in source, but not work here. 
-      // maybe add a function "addOutput" to class CodeCell and enable this line
-      // newOutput.outputLengthChanged.connect(cell._outputLengthHandler, cell);
-      ((cell.layout as PanelLayout).widgets[2] as Panel).addWidget(newOutput);
-  
+    var nTarget = cell.node.getElementsByClassName("jp-OutputArea").length;
+    for (var ii=0; ii<nOutput-nTarget; ii++){
+      cell.createNewOutputWidget();
     }
 
   }
